@@ -1,6 +1,11 @@
 #include "CApp.h"
 #include <iostream>
 
+#define S_W 640
+#define S_H 480
+#define S_XR 5
+#define S_YR 5
+
 CApp::CApp() {
     std::cout << "Create App..." << std::endl;
     surface = nullptr;
@@ -41,7 +46,7 @@ bool CApp::init() {
         return false;
     }
 
-    if ((surface = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == nullptr) {
+    if ((surface = SDL_SetVideoMode(S_W, S_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == nullptr) {
         return false;
     }
 
@@ -50,11 +55,11 @@ bool CApp::init() {
 
 void CApp::events(SDL_Event* event) {
     if (event->type == SDL_QUIT) running = false;
-    if (event->type == SDL_KEYDOWN) step = 1;
+    if (event->type == SDL_KEYDOWN) step = 0;
 }
 
 void CApp::loop() {
-//    step++;
+    step++;
 }
 
 void CApp::render() {
@@ -65,25 +70,33 @@ void CApp::render() {
     }
 
     if (step == 1) {
-        step = 0;
-        Uint32 *pixmem32;
-        pixmem32 = (Uint32*) surface->pixels;
-        Uint32 color = SDL_MapRGB(surface->format, 0, 0, 0);
-        for (Uint32 i = 0; i < 640 * 480; i++) *(pixmem32+i) = color;
+        step = 2;
+        SDL_FillRect(surface, NULL, 0x000000);
     }
 
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
+
+
+    SDL_Rect r;
+    r.w = S_W/S_XR;
+    r.h = S_H/S_YR;
+    for (uint x = 0; x < S_XR; x++)
+        for (uint y = 0; y < S_YR; y++) {
+            r.x = x * r.w;
+            r.y = y * r.h;
+            SDL_FillRect(surface, &r, SDL_MapRGB(surface->format, ((x+y + 1)*step) % 256, ((x+2*y)*step) % 256, ((2*x+y)*step) % 256));
+        }
 
     if(SDL_MUSTLOCK(surface)) SDL_UnlockSurface(surface);
     SDL_Flip(surface);
