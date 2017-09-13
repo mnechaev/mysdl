@@ -3,5 +3,6 @@ project(mysdl)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES src/main.cpp)
-add_executable(mysdl ${SOURCE_FILES})
+set(SOURCE_FILES src/main.cpp src/CApp/CApp.cpp)
+
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})

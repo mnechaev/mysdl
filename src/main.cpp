@@ -1,3 +1,6 @@
+#include "CApp/CApp.h"
+
 int main() {
-    return 0;
+    CApp app;
+    return app.onExecute();
 }
