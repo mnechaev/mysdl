@@ -51,6 +51,7 @@ bool CApp::init() {
 
 void CApp::events(SDL_Event* event) {
     if (event->type == SDL_QUIT) running = false;
+    if (event->type == SDL_KEYDOWN) step = 1;
 }
 
 void CApp::loop() {
