@@ -1,4 +1,4 @@
-//#include <SDL.h>
+#include <SDL.h>
 #include "CApp/CApp.h"
 
 int main(int argc, char *argv[]) {
