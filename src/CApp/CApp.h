@@ -11,9 +11,13 @@ private:
     bool running = false;
     unsigned step = 0;
 
+    bool init();
+
     void events();
     void loop();
     void render();
+
+    void cleanup();
 };
 
 #endif

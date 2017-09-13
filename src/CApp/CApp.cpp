@@ -11,6 +11,10 @@ CApp::~CApp() {
 
 int CApp::onExecute() {
     std::cout << "Execute App..." << std::endl;
+    if (!init()) {
+        return -1;
+    }
+
     running = true;
 
     while (running) {
@@ -19,7 +23,13 @@ int CApp::onExecute() {
         render();
     }
 
+    cleanup();
+
     return 0;
+}
+
+bool CApp::init() {
+    return true;
 }
 
 void CApp::events() {
@@ -32,4 +42,8 @@ void CApp::loop() {
 
 void CApp::render() {
     std::cout << "Render " << step << std::endl;
+}
+
+void CApp::cleanup() {
+
 }
