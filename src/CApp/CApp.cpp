@@ -3,6 +3,9 @@
 
 CApp::CApp() {
     std::cout << "Create App..." << std::endl;
+    surface = nullptr;
+    running = false;
+    step = 0;
 }
 
 CApp::~CApp() {
@@ -15,10 +18,15 @@ int CApp::onExecute() {
         return -1;
     }
 
+    SDL_Event event;
+
     running = true;
 
     while (running) {
-        events();
+        while(SDL_PollEvent(&event)) {
+            events(&event);
+        }
+
         loop();
         render();
     }
@@ -29,11 +37,20 @@ int CApp::onExecute() {
 }
 
 bool CApp::init() {
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+        return false;
+    }
+
+    if ((surface = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == nullptr) {
+        return false;
+    }
+
+
     return true;
 }
 
-void CApp::events() {
-    if (step >= 10) running = false;
+void CApp::events(SDL_Event* event) {
+    if (event->type == SDL_QUIT) running = false;
 }
 
 void CApp::loop() {
@@ -41,9 +58,9 @@ void CApp::loop() {
 }
 
 void CApp::render() {
-    std::cout << "Render " << step << std::endl;
+    std::cout << "Render\t" << step << std::endl;
 }
 
 void CApp::cleanup() {
-
+    SDL_Quit();
 }

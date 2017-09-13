@@ -1,6 +1,8 @@
 #ifndef CAPP_H
 #define CAPP_H
 
+#include <SDL.h>
+
 class CApp {
 public:
     CApp();
@@ -8,12 +10,14 @@ public:
     int onExecute();
 
 private:
-    bool running = false;
-    unsigned step = 0;
+
+    SDL_Surface* surface;
+    bool running;
+    unsigned step;
 
     bool init();
 
-    void events();
+    void events(SDL_Event* event);
     void loop();
     void render();
 
