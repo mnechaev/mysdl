@@ -1,4 +1,5 @@
 #include "CApp.h"
+#include "../renders/SDLRenderModel.h"
 #include <iostream>
 
 #define S_W 640
@@ -8,7 +9,6 @@
 
 CApp::CApp() {
     std::cout << "Create App..." << std::endl;
-    surface = nullptr;
     running = false;
     step = 0;
 }
@@ -23,7 +23,7 @@ int CApp::onExecute() {
         return -1;
     }
 
-    SDL_Event event;
+    SDL_Event event{};
 
     running = true;
 
@@ -42,15 +42,8 @@ int CApp::onExecute() {
 }
 
 bool CApp::init() {
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        return false;
-    }
-
-    if ((surface = SDL_SetVideoMode(S_W, S_H, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == nullptr) {
-        return false;
-    }
-
-    return true;
+    renderer = new Render(new SDLRenderModel(S_W, S_H));
+    return renderer->init();
 }
 
 void CApp::events(SDL_Event* event) {
@@ -63,16 +56,9 @@ void CApp::loop() {
 }
 
 void CApp::render() {
-    std::cout << "Render\t" << step << std::endl;
+//    std::cout << "Render\t" << step << std::endl;
 
-    if(SDL_MUSTLOCK(surface)) {
-        if(SDL_LockSurface(surface) < 0) return;
-    }
-
-    if (step == 1) {
-        step = 2;
-        SDL_FillRect(surface, NULL, 0x000000);
-    }
+    if (!renderer->beforeDraw()) return;
 
 //    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
 //    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
@@ -88,28 +74,31 @@ void CApp::render() {
 //    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
 
 
-    SDL_Rect r;
+    RRect r{};
     r.w = S_W/S_XR;
     r.h = S_H/S_YR;
     for (uint x = 0; x < S_XR; x++)
         for (uint y = 0; y < S_YR; y++) {
-            r.x = x * r.w;
-            r.y = y * r.h;
-            SDL_FillRect(surface, &r, SDL_MapRGB(surface->format, ((x+y + 1)*step) % 256, ((x+2*y)*step) % 256, ((2*x+y)*step) % 256));
+            r.x = (int16_t)(x * r.w);
+            r.y = (int16_t)(y * r.h);
+            renderer->drawRect(r, renderer->color((uint8_t)(((x+y + 1)*step) % 256), (uint8_t)(((x+2*y)*step) % 256), (uint8_t)(((2*x+y)*step) % 256)));
         }
 
-    if(SDL_MUSTLOCK(surface)) SDL_UnlockSurface(surface);
-    SDL_Flip(surface);
+    renderer->afterDraw();
+
 }
 
 void CApp::cleanup() {
-    SDL_Quit();
+    renderer->cleanup();
+
+    delete renderer;
+    renderer = nullptr;
 }
 
-void CApp::setPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b) {
-    Uint32 *pixmem32;
-    Uint32 color;
-    color = SDL_MapRGB(surface->format, r, g, b);
-    pixmem32 = (Uint32*) surface->pixels + x + y*surface->pitch / 4;
-    *pixmem32 = color;
-}
+//void CApp::setPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b) {
+////    Uint32 *pixmem32;
+////    Uint32 color;
+////    color = SDL_MapRGB(surface->format, r, g, b);
+////    pixmem32 = (Uint32*) surface->pixels + x + y*surface->pitch / 4;
+////    *pixmem32 = color;
+//}

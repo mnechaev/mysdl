@@ -2,6 +2,8 @@
 #define CAPP_H
 
 #include <SDL.h>
+#include <SDL_events.h>
+#include "../renders/Render.h"
 
 class CApp {
 public:
@@ -10,8 +12,8 @@ public:
     int onExecute();
 
 private:
+    Render *renderer;
 
-    SDL_Surface* surface;
     bool running;
     unsigned step;
 
@@ -23,7 +25,7 @@ private:
 
     void cleanup();
 
-    void setPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b);
+//    void setPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b);
 };
 
 #endif
