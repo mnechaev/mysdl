@@ -23,6 +23,10 @@ int CApp::onExecute() {
         return -1;
     }
 
+    sprite = new SimpleSprite();
+    sprite->x = 100;
+    sprite->y = 100;
+    sprite->r = 30;
     SDL_Event event{};
 
     running = true;
@@ -53,26 +57,15 @@ void CApp::events(SDL_Event* event) {
 
 void CApp::loop() {
     step++;
+
+    sprite->x += 1;
+    sprite->y += 1;
+    if (sprite->x >= renderer->width()) sprite->x = 0;
+    if (sprite->y >= renderer->height()) sprite->y = 0;
 }
 
 void CApp::render() {
-//    std::cout << "Render\t" << step << std::endl;
-
     if (!renderer->beforeDraw()) return;
-
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-//    setPixel(rand() % 640, rand() % 480, rand() % 256, rand() % 256, rand() % 256);
-
 
     RRect r{};
     r.w = S_W/S_XR;
@@ -84,13 +77,15 @@ void CApp::render() {
             renderer->drawRect(r, renderer->color((uint8_t)(((x+y + 1)*step) % 256), (uint8_t)(((x+2*y)*step) % 256), (uint8_t)(((2*x+y)*step) % 256)));
         }
 
-    renderer->afterDraw();
+    sprite->render(renderer);
 
+    renderer->afterDraw();
 }
 
 void CApp::cleanup() {
-    renderer->cleanup();
+    delete sprite;
 
+    renderer->cleanup();
     delete renderer;
     renderer = nullptr;
 }

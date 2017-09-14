@@ -16,9 +16,13 @@ public:
     bool beforeDraw();
     void afterDraw();
 
+    int width();
+    int height();
+
     uint32_t color(uint8_t r, uint8_t g, uint8_t b);
 
     void drawRect(RRect &rect, uint32_t color);
+    void drawCircle(RRect &rect, uint32_t color);
 private:
     IRenderModel *_render_model;
 };

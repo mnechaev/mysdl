@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_events.h>
 #include "../renders/Render.h"
+#include "SimpleSprite.h"
 
 class CApp {
 public:
@@ -13,6 +14,8 @@ public:
 
 private:
     Render *renderer;
+
+    SimpleSprite *sprite;
 
     bool running;
     unsigned step;

@@ -4,6 +4,7 @@
 
 #include <SDL.h>
 #include <iostream>
+#include <cmath>
 #include "SDLRenderModel.h"
 
 SDLRenderModel::SDLRenderModel(int width, int height) : IRenderModel(width, height) {
@@ -54,4 +55,19 @@ void SDLRenderModel::drawRect(RRect &rect, uint32_t color) {
     r.w = rect.w;
     r.h = rect.h;
     SDL_FillRect(surface, &r, color);
+}
+
+void SDLRenderModel::setPixel(int16_t x, int16_t y, uint32_t color) {
+    uint32_t *pixmem32;
+    pixmem32 = (Uint32*) surface->pixels + y*surface->pitch / 4 + x;
+    *pixmem32 = color;
+}
+
+void SDLRenderModel::drawCircle(RRect &rect, uint32_t color) {
+    int16_t r = (int16_t) (rect.w / 2);
+    int16_t rr = r * r;
+    for (int16_t x = -r; x <= r; x++)
+        for (int16_t y = -r; y <= r; y++) {
+            if (x*x + y*y - rr <= 1) setPixel(x + rect.x + r, y + rect.y + r, color);
+        }
 }

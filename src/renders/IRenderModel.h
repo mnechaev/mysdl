@@ -25,6 +25,7 @@ public:
     virtual uint32_t color(uint8_t r, uint8_t g, uint8_t b) = 0;
 
     virtual void drawRect(RRect &rect, uint32_t color) = 0;
+    virtual void drawCircle(RRect &rect, uint32_t color) = 0;
 
     int width();
     int height();
