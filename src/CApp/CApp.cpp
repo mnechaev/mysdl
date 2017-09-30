@@ -60,8 +60,8 @@ void CApp::loop() {
 
     sprite->x += 1;
     sprite->y += 1;
-    if (sprite->x >= renderer->width()) sprite->x = 0;
-    if (sprite->y >= renderer->height()) sprite->y = 0;
+    if (sprite->x >= renderer->width() - 30) sprite->x = 0;
+    if (sprite->y >= renderer->height() - 30) sprite->y = 0;
 }
 
 void CApp::render() {
