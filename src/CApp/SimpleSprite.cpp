@@ -4,7 +4,7 @@
 
 #include "SimpleSprite.h"
 
-SimpleSprite::SimpleSprite() {}
+SimpleSprite::SimpleSprite():dx(1), dy(1) {}
 
 void SimpleSprite::render(Render *renderer) {
     RRect rect{};
