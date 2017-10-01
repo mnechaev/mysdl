@@ -15,6 +15,8 @@ public:
     int x;
     int y;
     int r;
+    int dx;
+    int dy;
 
     void render(Render* renderer);
 };
