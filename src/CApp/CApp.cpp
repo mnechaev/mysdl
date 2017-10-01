@@ -58,10 +58,13 @@ void CApp::events(SDL_Event* event) {
 void CApp::loop() {
     step++;
 
-    sprite->x += 1;
-    sprite->y += 1;
-    if (sprite->x >= renderer->width() - 30) sprite->x = 0;
-    if (sprite->y >= renderer->height() - 30) sprite->y = 0;
+    sprite->x +=sprite->dx;
+    sprite->y += sprite->dy;
+    if (sprite->x >= renderer->width() - sprite->r * 2) sprite->dx = -1;
+    if (sprite->y >= renderer->height() - sprite->r * 2) sprite->dy = -1;
+    if (sprite->x <= 0) sprite->dx = 1;
+    if (sprite->y <= 0) sprite->dy = 1;
+    
 }
 
 void CApp::render() {
@@ -74,7 +77,7 @@ void CApp::render() {
         for (uint y = 0; y < S_YR; y++) {
             r.x = (int16_t)(x * r.w);
             r.y = (int16_t)(y * r.h);
-            renderer->drawRect(r, renderer->color((uint8_t)(((x+y + 1)*step) % 256), (uint8_t)(((x+2*y)*step) % 256), (uint8_t)(((2*x+y)*step) % 256)));
+            renderer->drawRect(r, renderer->color((uint8_t)((int)((x+y)*step*0.01) % 256), (uint8_t)((int)((x+2*y)*step*0.01) % 256), (uint8_t)((int)((2*x+y)*step*0.01) % 256)));
         }
 
     sprite->render(renderer);
