@@ -58,7 +58,7 @@ void SDLRenderModel::drawRect(RRect &rect, uint32_t color) {
 }
 
 void SDLRenderModel::setPixel(int16_t x, int16_t y, uint32_t color) {
-    if (x < 0 || y < 0 || x > width() - 1 || y >= height() - 1) return;
+    if (x < 0 || y < 0 || x > width() || y >= height()) return;
 
     uint32_t *pixmem32;
     pixmem32 = (Uint32*) surface->pixels + y*surface->pitch / 4 + x;
@@ -68,8 +68,8 @@ void SDLRenderModel::setPixel(int16_t x, int16_t y, uint32_t color) {
 void SDLRenderModel::drawCircle(RRect &rect, uint32_t color) {
     int16_t r = (int16_t) (rect.w / 2);
     int16_t rr = r * r;
-    for (int16_t x = -r; x <= r; x++)
-        for (int16_t y = -r; y <= r; y++) {
-            if (x*x + y*y - rr <= 1) setPixel(x + rect.x + r, y + rect.y + r, color);
+    for (int16_t x = -r; x < r; x++)
+        for (int16_t y = -r; y < r; y++) {
+            if (x*x + x + y*y + y - rr <= 1) setPixel(x + rect.x + r, y + rect.y + r, color);
         }
 }
