@@ -1,5 +1,6 @@
 #include "CApp.h"
 #include "../renders/SDLRenderModel.h"
+#include "../events/SDLEventsControllerModel.h"
 #include <iostream>
 
 #define S_W 640
@@ -27,18 +28,19 @@ int CApp::onExecute() {
     sprite->x = 100;
     sprite->y = 100;
     sprite->r = 30;
-    SDL_Event event{};
-
+    Event *event = new Event();
     running = true;
 
     while (running) {
-        while(SDL_PollEvent(&event)) {
-            events(&event);
+        while (events_controller->check_event(event)) {
+            events(event);
         }
 
         loop();
         render();
     }
+
+    delete event;
 
     cleanup();
 
@@ -47,19 +49,33 @@ int CApp::onExecute() {
 
 bool CApp::init() {
     renderer = new Render(new SDLRenderModel(S_W, S_H));
+    events_controller = new EventsController(new SDLEventsControllerModel());
     return renderer->init();
 }
 
-void CApp::events(SDL_Event* event) {
-    if (event->type == SDL_QUIT) running = false;
-    if (event->type == SDL_KEYDOWN) step = 0;
+
+void CApp::events(Event *event) {
+    if (event->type == EventTypes::QUIT) running = false;
+    if (event->type == EventTypes::KEYDOWN) {
+        step = 0;
+        switch (event->key) {
+            case EventKeyCodes::UP: sprite->y -= S_H / S_YR;
+                break;
+            case EventKeyCodes::DOWN: sprite->y += S_H / S_YR;
+                break;
+            case EventKeyCodes::LEFT: sprite->x -= S_W / S_XR;
+                break;
+            case EventKeyCodes::RIGHT: sprite->x += S_H / S_XR;
+                break;
+        }
+    }
 }
 
 void CApp::loop() {
     step++;
 
-    sprite->x +=sprite->dx;
-    sprite->y += sprite->dy;
+//    sprite->x +=sprite->dx;
+//    sprite->y += sprite->dy;
     if (sprite->x >= renderer->width() - sprite->r * 2) sprite->dx = -1;
     if (sprite->y >= renderer->height() - sprite->r * 2) sprite->dy = -1;
     if (sprite->x <= 0) sprite->dx = 1;
@@ -91,6 +107,9 @@ void CApp::cleanup() {
     renderer->cleanup();
     delete renderer;
     renderer = nullptr;
+
+    delete events_controller;
+    events_controller = nullptr;
 }
 
 //void CApp::setPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b) {

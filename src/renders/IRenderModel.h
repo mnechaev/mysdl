@@ -27,11 +27,11 @@ public:
     virtual void drawRect(RRect &rect, uint32_t color) = 0;
     virtual void drawCircle(RRect &rect, uint32_t color) = 0;
 
-    int width();
-    int height();
-    virtual ~IRenderModel() = 0;
+    int width() { return _width; }
+    int height() { return _height; }
+    virtual ~IRenderModel() = default;
 protected:
-    IRenderModel(int width, int height);
+    IRenderModel(int width, int height) : _width(width), _height(height) {}
 private:
     int _width;
     int _height;

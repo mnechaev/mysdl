@@ -1,10 +1,9 @@
 #ifndef CAPP_H
 #define CAPP_H
 
-#include <SDL.h>
-#include <SDL_events.h>
 #include "../renders/Render.h"
 #include "SimpleSprite.h"
+#include "../events/EventsController.h"
 
 class CApp {
 public:
@@ -14,6 +13,7 @@ public:
 
 private:
     Render *renderer;
+    EventsController *events_controller;
 
     SimpleSprite *sprite;
 
@@ -22,13 +22,11 @@ private:
 
     bool init();
 
-    void events(SDL_Event* event);
+    void events(Event *event);
     void loop();
     void render();
 
     void cleanup();
-
-//    void setPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b);
 };
 
 #endif
