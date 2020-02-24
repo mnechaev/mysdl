@@ -1,14 +1,17 @@
 #include "Render.h"
 #include "SDLRenderModel.h"
-#include <iostream>
+#include "../utils/Logger.h"
+
 Render::Render(int width, int height) {
-    std::cout << "Create Render..." << std::endl;
+    Logger::instance().on_instance_create("Render");
     _render_model = new SDLRenderModel(width, height);
 }
 
 Render::~Render() {
     delete _render_model;
-    std::cout << "Destroy Render..." << std::endl;
+    _render_model = nullptr;
+
+    Logger::instance().on_instance_destroy("Render");
 }
 
 bool Render::init() {

@@ -4,6 +4,7 @@
 #include "../renders/Render.h"
 #include "SimpleSprite.h"
 #include "../events/EventsController.h"
+#include "../times/TimeController.h"
 
 class CApp {
 public:
@@ -14,6 +15,7 @@ public:
 private:
     Render *renderer;
     EventsController *events_controller;
+    TimeController *time_controller;
 
     SimpleSprite *sprite;
 

@@ -2,16 +2,16 @@
 // Created by mnechaev on 24.02.2020.
 //
 
-#include <iostream>
 #include "SDLEventsControllerModel.h"
+#include "../utils/Logger.h"
 
 
 SDLEventsControllerModel::SDLEventsControllerModel() : IEventsControllerModel() {
-    std::cout << "Create SDLEventsControllerModel..." << std::endl;
+    Logger::instance().on_instance_create("SDLEventsControllerModel");
 }
 
 SDLEventsControllerModel::~SDLEventsControllerModel() {
-    std::cout << "Destroy SDLEventsControllerModel..." << std::endl;
+    Logger::instance().on_instance_destroy("SDLEventsControllerModel");
 }
 
 bool SDLEventsControllerModel::check_event(Event *event) {

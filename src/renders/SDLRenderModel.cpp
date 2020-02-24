@@ -3,16 +3,16 @@
 //
 
 #include <SDL.h>
-#include <iostream>
 #include <cmath>
 #include "SDLRenderModel.h"
+#include "../utils/Logger.h"
 
 SDLRenderModel::SDLRenderModel(int width, int height) : IRenderModel(width, height) {
-    std::cout << "Create SDLRenderModel..." << std::endl;
+    Logger::instance().on_instance_create("SDLRenderModel");
 }
 
 SDLRenderModel::~SDLRenderModel() {
-    std::cout << "Destroy SDLRenderModel..." << std::endl;
+    Logger::instance().on_instance_destroy("SDLRenderModel");
 }
 
 bool SDLRenderModel::init() {

@@ -1,5 +1,6 @@
 #include "CApp.h"
-#include <iostream>
+#include "../utils/Benchmark.h"
+#include "../utils/Logger.h"
 
 #define S_W 640
 #define S_H 480
@@ -7,17 +8,18 @@
 #define S_YR 5
 
 CApp::CApp() {
-    std::cout << "Create App..." << std::endl;
+
+    Logger::instance().on_instance_create("App");
     running = false;
     step = 0;
 }
 
 CApp::~CApp() {
-    std::cout << "Destroy App..." << std::endl;
+    Logger::instance().on_instance_destroy("App");
 }
 
 int CApp::onExecute() {
-    std::cout << "Execute App..." << std::endl;
+    Logger::instance().info("Execute App...");
     if (!init()) {
         return -1;
     }
@@ -29,6 +31,8 @@ int CApp::onExecute() {
     Event *event = new Event();
     running = true;
 
+    Benchmark benchmark;
+    benchmark.init_on_frame(time_controller->get_ticks());
     while (running) {
         while (events_controller->check_event(event)) {
             events(event);
@@ -36,6 +40,8 @@ int CApp::onExecute() {
 
         loop();
         render();
+
+        benchmark.on_frame(time_controller->get_ticks());
     }
 
     delete event;
@@ -48,6 +54,7 @@ int CApp::onExecute() {
 bool CApp::init() {
     renderer = new Render(S_W, S_H);
     events_controller = new EventsController();
+    time_controller = new TimeController();
     return renderer->init();
 }
 
@@ -107,6 +114,9 @@ void CApp::cleanup() {
 
     delete events_controller;
     events_controller = nullptr;
+
+    delete time_controller;
+    time_controller = nullptr;
 }
 
 //void CApp::setPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b) {
