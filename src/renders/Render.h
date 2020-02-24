@@ -7,7 +7,7 @@
 
 class Render {
 public:
-    explicit Render(IRenderModel *render_model);
+    explicit Render(int width, int height);
     ~Render();
 
     bool init();

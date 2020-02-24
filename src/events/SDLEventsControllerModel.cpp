@@ -6,7 +6,7 @@
 #include "SDLEventsControllerModel.h"
 
 
-SDLEventsControllerModel::SDLEventsControllerModel() {
+SDLEventsControllerModel::SDLEventsControllerModel() : IEventsControllerModel() {
     std::cout << "Create SDLEventsControllerModel..." << std::endl;
 }
 

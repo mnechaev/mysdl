@@ -4,9 +4,11 @@
 
 #include <iostream>
 #include "EventsController.h"
+#include "SDLEventsControllerModel.h"
 
-EventsController::EventsController(IEventsControllerModel *events_model): _events_model(events_model) {
+EventsController::EventsController() {
     std::cout << "Create EventsController..." << std::endl;
+    _events_model = new SDLEventsControllerModel();
 }
 
 EventsController::~EventsController() {

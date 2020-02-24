@@ -1,6 +1,4 @@
 #include "CApp.h"
-#include "../renders/SDLRenderModel.h"
-#include "../events/SDLEventsControllerModel.h"
 #include <iostream>
 
 #define S_W 640
@@ -48,8 +46,8 @@ int CApp::onExecute() {
 }
 
 bool CApp::init() {
-    renderer = new Render(new SDLRenderModel(S_W, S_H));
-    events_controller = new EventsController(new SDLEventsControllerModel());
+    renderer = new Render(S_W, S_H);
+    events_controller = new EventsController();
     return renderer->init();
 }
 
@@ -57,7 +55,6 @@ bool CApp::init() {
 void CApp::events(Event *event) {
     if (event->type == EventTypes::QUIT) running = false;
     if (event->type == EventTypes::KEYDOWN) {
-        step = 0;
         switch (event->key) {
             case EventKeyCodes::UP: sprite->y -= S_H / S_YR;
                 break;

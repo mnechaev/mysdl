@@ -58,6 +58,8 @@ void SDLRenderModel::drawRect(RRect &rect, uint32_t color) {
 }
 
 void SDLRenderModel::setPixel(int16_t x, int16_t y, uint32_t color) {
+    if (x < 0 || y < 0 || x > width() - 1 || y >= height() - 1) return;
+
     uint32_t *pixmem32;
     pixmem32 = (Uint32*) surface->pixels + y*surface->pitch / 4 + x;
     *pixmem32 = color;

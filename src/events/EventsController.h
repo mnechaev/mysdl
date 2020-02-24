@@ -10,7 +10,7 @@
 
 class EventsController {
 public:
-    explicit EventsController(IEventsControllerModel *events_model);
+    explicit EventsController();
     ~EventsController();
 
     bool check_event(Event *event);

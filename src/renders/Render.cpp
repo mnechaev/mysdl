@@ -1,7 +1,9 @@
 #include "Render.h"
+#include "SDLRenderModel.h"
 #include <iostream>
-Render::Render(IRenderModel *render_model) : _render_model(render_model) {
+Render::Render(int width, int height) {
     std::cout << "Create Render..." << std::endl;
+    _render_model = new SDLRenderModel(width, height);
 }
 
 Render::~Render() {
