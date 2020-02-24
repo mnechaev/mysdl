@@ -3,6 +3,7 @@ project(mysdl)
 
 set(CMAKE_CXX_STANDARD 11)
 
+find_package(SDL REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
 
 set(SOURCE_FILES src/main.cpp src/CApp/CApp.cpp src/renders/IRenderModel.cpp src/renders/IRenderModel.h src/renders/Render.cpp src/renders/Render.h src/renders/SDLRenderModel.cpp src/renders/SDLRenderModel.h src/CApp/SimpleSprite.cpp src/CApp/SimpleSprite.h)
