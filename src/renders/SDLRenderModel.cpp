@@ -70,6 +70,6 @@ void SDLRenderModel::drawCircle(RRect &rect, uint32_t color) {
     int16_t rr = r * r;
     for (int16_t x = -r; x < r; x++)
         for (int16_t y = -r; y < r; y++) {
-            if (x*x + x + y*y + y - rr <= 1) setPixel(x + rect.x + r, y + rect.y + r, color);
+            if (x*x + x + y*y + y - rr <= 0.5) setPixel(x + rect.x + r, y + rect.y + r, color);
         }
 }

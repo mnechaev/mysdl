@@ -63,13 +63,13 @@ void CApp::events(Event *event) {
     if (event->type == EventTypes::QUIT) running = false;
     if (event->type == EventTypes::KEYDOWN) {
         switch (event->key) {
-            case EventKeyCodes::UP: sprite->y -= S_H / S_YR;
+            case EventKeyCodes::UP: sprite->y -= S_H / S_YR / 4;
                 break;
-            case EventKeyCodes::DOWN: sprite->y += S_H / S_YR;
+            case EventKeyCodes::DOWN: sprite->y += S_H / S_YR / 4;
                 break;
-            case EventKeyCodes::LEFT: sprite->x -= S_W / S_XR;
+            case EventKeyCodes::LEFT: sprite->x -= S_W / S_XR / 4;
                 break;
-            case EventKeyCodes::RIGHT: sprite->x += S_H / S_XR;
+            case EventKeyCodes::RIGHT: sprite->x += S_W / S_XR / 4;
                 break;
         }
     }

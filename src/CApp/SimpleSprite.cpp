@@ -16,4 +16,10 @@ void SimpleSprite::render(Render *renderer) {
     renderer->drawRect(rect, renderer->color(255, 255, 255));
 
     renderer->drawCircle(rect, renderer->color(0, 0, 255));
+
+    rect.x = x + r;
+    rect.y = y + r;
+    rect.w = (r / 3) * 2;
+    rect.h = rect.w;
+    renderer->drawCircle(rect, renderer->color(0, 255, 0));
 }

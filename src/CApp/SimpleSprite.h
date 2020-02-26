@@ -7,8 +7,9 @@
 
 
 #include "../renders/Render.h"
+#include "../displays/IRenderable.h"
 
-class SimpleSprite {
+class SimpleSprite : public IRenderable {
 public:
     SimpleSprite();
 
