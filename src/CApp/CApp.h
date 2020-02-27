@@ -1,6 +1,7 @@
 #ifndef CAPP_H
 #define CAPP_H
 
+#include <vector>
 #include "../renders/Render.h"
 #include "SimpleSprite.h"
 #include "../events/EventsController.h"
@@ -18,6 +19,7 @@ private:
     TimeController *time_controller;
 
     SimpleSprite *sprite;
+    std::vector<SimpleSprite*> objects;
 
     bool running;
     unsigned step;
@@ -27,6 +29,8 @@ private:
     void events(Event *event);
     void loop();
     void render();
+
+    void loop_sprite(SimpleSprite* sprite);
 
     void cleanup();
 };

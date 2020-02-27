@@ -29,6 +29,16 @@ int CApp::onExecute() {
     sprite->y = 100;
     sprite->r = 30;
     Event *event = new Event();
+
+    for (uint i = 0; i < 1000; i++) {
+        SimpleSprite *obj = new SimpleSprite();
+        obj->x = random() % S_W;
+        obj->y = random() % S_H;
+        obj->r = random()%30 + 10;
+        objects.push_back(obj);
+    }
+
+
     running = true;
 
     Benchmark benchmark;
@@ -78,13 +88,18 @@ void CApp::events(Event *event) {
 void CApp::loop() {
     step++;
 
-//    sprite->x +=sprite->dx;
-//    sprite->y += sprite->dy;
+    for(auto sprite : objects) {
+        loop_sprite(sprite);
+    }
+}
+
+void CApp::loop_sprite(SimpleSprite *sprite) {
+    sprite->x +=sprite->dx;
+    sprite->y += sprite->dy;
     if (sprite->x >= renderer->width() - sprite->r * 2) sprite->dx = -1;
     if (sprite->y >= renderer->height() - sprite->r * 2) sprite->dy = -1;
     if (sprite->x <= 0) sprite->dx = 1;
     if (sprite->y <= 0) sprite->dy = 1;
-    
 }
 
 void CApp::render() {
@@ -101,6 +116,7 @@ void CApp::render() {
         }
 
     sprite->render(renderer);
+    for (auto s : objects) s->render(renderer);
 
     renderer->afterDraw();
 }
