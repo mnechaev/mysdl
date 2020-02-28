@@ -6,6 +6,7 @@
 #define MYSDL_CACHE_H
 
 #include <string>
+#include <unordered_map>
 #include "ICanvas.h"
 #include "ICanvasController.h"
 
@@ -18,8 +19,7 @@ public:
 
 private:
     ICanvasController *_canvas_controller;
-    std::string _cache_key;
-    ICanvas *_cache = nullptr;
+    std::unordered_map<std::string, ICanvas*> map;
 };
 
 

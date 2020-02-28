@@ -36,7 +36,7 @@ int CApp::onExecute() {
         SimpleSprite *obj = new SimpleSprite();
         obj->x = random() % S_W;
         obj->y = random() % S_H;
-        obj->r = random()%30 * 0 + 10;
+        obj->r = random()%30 + 10;
         obj->dx = random()%2 == 0 ? -1 : 1;
         obj->dy = random()%2 == 0 ? -1 : 1;
         objects.push_back(obj);
@@ -144,6 +144,8 @@ void CApp::render_object(IRenderOwner *object) {
 
 void CApp::cleanup() {
     delete sprite;
+
+    for (auto s : objects) delete s;
 
     canvas_controller->cleanup();
     delete canvas_controller;

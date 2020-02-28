@@ -12,6 +12,7 @@
 class SimpleSprite : public IRenderOwner {
 public:
     SimpleSprite();
+    ~SimpleSprite();
 
     int x;
     int y;

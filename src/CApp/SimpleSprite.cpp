@@ -17,3 +17,8 @@ IRenderable *SimpleSprite::render() {
     }
     return _render;
 }
+
+SimpleSprite::~SimpleSprite() {
+    if (_render != nullptr)
+        delete _render;
+}
