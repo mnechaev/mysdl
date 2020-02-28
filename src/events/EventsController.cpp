@@ -7,7 +7,7 @@
 #include "../utils/Logger.h"
 
 EventsController::EventsController() {
-    Logger::instance().on_instance_create("EventsController");
+    Logger::instance()->on_instance_create("EventsController");
     _events_model = new SDLEventsControllerModel();
 }
 
@@ -15,7 +15,7 @@ EventsController::~EventsController() {
     delete _events_model;
     _events_model = nullptr;
 
-    Logger::instance().on_instance_destroy("EventsController");
+    Logger::instance()->on_instance_destroy("EventsController");
 }
 
 bool EventsController::check_event(Event *event) {

@@ -10,11 +10,11 @@
 
 SDLCanvasController::SDLCanvasController(uint16_t width, uint16_t height):_width(width),
                                                                           _height(height) {
-    Logger::instance().on_instance_create("SDLCanvasController");
+    Logger::instance()->on_instance_create("SDLCanvasController");
 }
 
 SDLCanvasController::~SDLCanvasController() {
-    Logger::instance().on_instance_destroy("SDLCanvasController");
+    Logger::instance()->on_instance_destroy("SDLCanvasController");
 }
 
 ICanvas *SDLCanvasController::create_canvas(uint16_t width, uint16_t height) {

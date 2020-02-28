@@ -6,11 +6,11 @@
 #include "../utils/Logger.h"
 
 SimpleSpriteRender::SimpleSpriteRender(SimpleSprite *sprite):_sprite(sprite) {
-    Logger::instance().on_instance_create("SimpleSpriteRender");
+    Logger::instance()->on_instance_create("SimpleSpriteRender");
 }
 
 SimpleSpriteRender::~SimpleSpriteRender() {
-    Logger::instance().on_instance_destroy("SimpleSpriteRender");
+    Logger::instance()->on_instance_destroy("SimpleSpriteRender");
 }
 
 int SimpleSpriteRender::render_x() const {

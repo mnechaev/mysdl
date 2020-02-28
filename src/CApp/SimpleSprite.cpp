@@ -4,8 +4,11 @@
 
 #include "SimpleSprite.h"
 #include "SimpleSpriteRender.h"
+#include "../utils/Logger.h"
 
-SimpleSprite::SimpleSprite(): dx(1), dy(1) {}
+SimpleSprite::SimpleSprite(): dx(1), dy(1) {
+    Logger::instance()->on_instance_create("SimpleSprite");
+}
 
 const std::string SimpleSprite::cache_key() {
     return "SimpleSprite" + std::to_string(r);
@@ -21,4 +24,5 @@ IRenderable *SimpleSprite::render() {
 SimpleSprite::~SimpleSprite() {
     if (_render != nullptr)
         delete _render;
+    Logger::instance()->on_instance_destroy("SimpleSprite");
 }

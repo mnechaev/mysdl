@@ -8,11 +8,11 @@
 SDLCanvas::SDLCanvas(SDL_Surface *image, uint16_t width, uint16_t height):_image(image),
                                                                           _width(width),
                                                                           _height(height) {
-//    Logger::instance().on_instance_create("SDLCanvas");
+    Logger::instance()->on_instance_create("SDLCanvas");
 }
 
 SDLCanvas::~SDLCanvas() {
-//    Logger::instance().on_instance_destroy("SDLCanvas");
+    Logger::instance()->on_instance_destroy("SDLCanvas");
 }
 
 void SDLCanvas::drawRect(RRect &rect, uint32_t color) {

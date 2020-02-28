@@ -7,11 +7,11 @@
 
 
 SDLEventsControllerModel::SDLEventsControllerModel() : IEventsControllerModel() {
-    Logger::instance().on_instance_create("SDLEventsControllerModel");
+    Logger::instance()->on_instance_create("SDLEventsControllerModel");
 }
 
 SDLEventsControllerModel::~SDLEventsControllerModel() {
-    Logger::instance().on_instance_destroy("SDLEventsControllerModel");
+    Logger::instance()->on_instance_destroy("SDLEventsControllerModel");
 }
 
 bool SDLEventsControllerModel::check_event(Event *event) {

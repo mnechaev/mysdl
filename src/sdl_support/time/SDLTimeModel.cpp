@@ -7,7 +7,7 @@
 #include "../../utils/Logger.h"
 
 SDLTimeModel::SDLTimeModel() {
-    Logger::instance().on_instance_create("SDLTimeModel");
+    Logger::instance()->on_instance_create("SDLTimeModel");
 }
 
 uint32_t SDLTimeModel::get_ticks() {
@@ -15,5 +15,5 @@ uint32_t SDLTimeModel::get_ticks() {
 }
 
 SDLTimeModel::~SDLTimeModel() {
-    Logger::instance().on_instance_destroy("SDLTimeModel");
+    Logger::instance()->on_instance_destroy("SDLTimeModel");
 }

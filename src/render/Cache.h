@@ -13,6 +13,7 @@
 class Cache {
 public:
     Cache(ICanvasController *canvas_controller);
+    ~Cache();
 
     ICanvas *get_from_cache(const std::string &cache_key);
     void put_to_cache(const std::string &cache_key, ICanvas *canvas);

@@ -7,7 +7,7 @@
 #include "../utils/Logger.h"
 
 TimeController::TimeController() {
-    Logger::instance().on_instance_create("TimeController");
+    Logger::instance()->on_instance_create("TimeController");
     time_model = new SDLTimeModel();
 }
 
@@ -15,7 +15,7 @@ TimeController::~TimeController() {
     delete time_model;
     time_model = nullptr;
 
-    Logger::instance().on_instance_destroy("TimeController");
+    Logger::instance()->on_instance_destroy("TimeController");
 }
 
 uint32_t TimeController::get_ticks() {

@@ -11,17 +11,19 @@
 
 CApp::CApp() {
 
-    Logger::instance().on_instance_create("App");
+    Logger::instance()->on_instance_create("App");
     running = false;
     step = 0;
 }
 
 CApp::~CApp() {
-    Logger::instance().on_instance_destroy("App");
+    Logger::instance()->on_instance_destroy("App");
+
+    Logger::instance()->result();
 }
 
 int CApp::onExecute() {
-    Logger::instance().info("Execute App...");
+    Logger::instance()->info("Execute App...");
     if (!init()) {
         return -1;
     }
