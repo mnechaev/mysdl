@@ -6,7 +6,7 @@
 #define MYSDL_SDLTIMEMODEL_H
 
 
-#include "ITimeModel.h"
+#include "../../times/ITimeModel.h"
 
 class SDLTimeModel : public ITimeModel {
 public:

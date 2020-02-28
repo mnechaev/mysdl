@@ -7,7 +7,7 @@
 
 
 #include <SDL_events.h>
-#include "IEventsControllerModel.h"
+#include "../../events/IEventsControllerModel.h"
 
 class SDLEventsControllerModel : public IEventsControllerModel {
 public:
@@ -17,7 +17,7 @@ public:
 private:
     SDL_Event sdl_event;
 
-    EventKeyCodes map_key();
+    uint32_t map_key();
 };
 
 

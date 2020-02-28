@@ -2,10 +2,13 @@
 #define CAPP_H
 
 #include <vector>
-#include "../renders/Render.h"
 #include "SimpleSprite.h"
 #include "../events/EventsController.h"
 #include "../times/TimeController.h"
+#include "../render/IRenderable.h"
+#include "../render/ICanvasController.h"
+#include "../render/IRenderOwner.h"
+#include "../render/Cache.h"
 
 class CApp {
 public:
@@ -14,7 +17,8 @@ public:
     int onExecute();
 
 private:
-    Render *renderer;
+    ICanvasController *canvas_controller;
+    Cache *cache;
     EventsController *events_controller;
     TimeController *time_controller;
 
@@ -29,6 +33,7 @@ private:
     void events(Event *event);
     void loop();
     void render();
+    void render_object(IRenderOwner *object);
 
     void loop_sprite(SimpleSprite* sprite);
 

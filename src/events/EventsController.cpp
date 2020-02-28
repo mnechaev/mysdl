@@ -3,7 +3,7 @@
 //
 
 #include "EventsController.h"
-#include "SDLEventsControllerModel.h"
+#include "../sdl_support/events/SDLEventsControllerModel.h"
 #include "../utils/Logger.h"
 
 EventsController::EventsController() {

@@ -6,10 +6,10 @@
 #define MYSDL_SIMPLESPRITE_H
 
 
-#include "../renders/Render.h"
-#include "../displays/IRenderable.h"
+#include "../render/IRenderable.h"
+#include "../render/IRenderOwner.h"
 
-class SimpleSprite : public IRenderable {
+class SimpleSprite : public IRenderOwner {
 public:
     SimpleSprite();
 
@@ -19,7 +19,12 @@ public:
     int dx;
     int dy;
 
-    void render(Render* renderer);
+    const std::string cache_key() override;
+
+    IRenderable *render() override;
+
+private:
+    IRenderable *_render = nullptr;
 };
 
 

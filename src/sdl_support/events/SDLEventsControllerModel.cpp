@@ -3,7 +3,7 @@
 //
 
 #include "SDLEventsControllerModel.h"
-#include "../utils/Logger.h"
+#include "../../utils/Logger.h"
 
 
 SDLEventsControllerModel::SDLEventsControllerModel() : IEventsControllerModel() {
@@ -35,17 +35,6 @@ bool SDLEventsControllerModel::check_event(Event *event) {
     return false;
 }
 
-EventKeyCodes SDLEventsControllerModel::map_key() {
-    switch (sdl_event.key.keysym.sym) {
-        case SDLK_UP:
-            return EventKeyCodes::UP;;
-        case SDLK_DOWN:
-            return EventKeyCodes::DOWN;
-        case SDLK_LEFT:
-            return EventKeyCodes::LEFT;
-        case SDLK_RIGHT:
-            return EventKeyCodes::RIGHT;
-    }
-
-    return EventKeyCodes::UNKNOWN;
+uint32_t SDLEventsControllerModel::map_key() {
+    return sdl_event.key.keysym.sym;
 }

@@ -1,6 +1,8 @@
 #include "CApp.h"
 #include "../utils/Benchmark.h"
 #include "../utils/Logger.h"
+#include "../render/IRenderOwner.h"
+#include "../sdl_support/render/SDLCanvasController.h"
 
 #define S_W 640
 #define S_H 480
@@ -30,11 +32,13 @@ int CApp::onExecute() {
     sprite->r = 30;
     Event *event = new Event();
 
-    for (uint i = 0; i < 1000; i++) {
+    for (uint i = 0; i < 10000; i++) {
         SimpleSprite *obj = new SimpleSprite();
         obj->x = random() % S_W;
         obj->y = random() % S_H;
-        obj->r = random()%30 + 10;
+        obj->r = random()%30 * 0 + 10;
+        obj->dx = random()%2 == 0 ? -1 : 1;
+        obj->dy = random()%2 == 0 ? -1 : 1;
         objects.push_back(obj);
     }
 
@@ -62,10 +66,14 @@ int CApp::onExecute() {
 }
 
 bool CApp::init() {
-    renderer = new Render(S_W, S_H);
+    canvas_controller = new SDLCanvasController(S_W, S_H);
+    if (!canvas_controller->init()) return false;
+
+    cache = new Cache(canvas_controller);
+
     events_controller = new EventsController();
     time_controller = new TimeController();
-    return renderer->init();
+    return true;
 }
 
 
@@ -96,14 +104,14 @@ void CApp::loop() {
 void CApp::loop_sprite(SimpleSprite *sprite) {
     sprite->x +=sprite->dx;
     sprite->y += sprite->dy;
-    if (sprite->x >= renderer->width() - sprite->r * 2) sprite->dx = -1;
-    if (sprite->y >= renderer->height() - sprite->r * 2) sprite->dy = -1;
+    if (sprite->x >= canvas_controller->main_canvas()->width() - sprite->r * 2) sprite->dx = -1;
+    if (sprite->y >= canvas_controller->main_canvas()->height() - sprite->r * 2) sprite->dy = -1;
     if (sprite->x <= 0) sprite->dx = 1;
     if (sprite->y <= 0) sprite->dy = 1;
 }
 
 void CApp::render() {
-    if (!renderer->beforeDraw()) return;
+    if (!canvas_controller->beforeDraw()) return;
 
     RRect r{};
     r.w = S_W/S_XR;
@@ -112,21 +120,34 @@ void CApp::render() {
         for (uint y = 0; y < S_YR; y++) {
             r.x = (int16_t)(x * r.w);
             r.y = (int16_t)(y * r.h);
-            renderer->drawRect(r, renderer->color((uint8_t)((int)((x+y)*step*0.01) % 256), (uint8_t)((int)((x+2*y)*step*0.01) % 256), (uint8_t)((int)((2*x+y)*step*0.01) % 256)));
+            canvas_controller->main_canvas()->drawRect(r, canvas_controller->color((uint8_t)((int)((x+y)*step*0.01) % 256), (uint8_t)((int)((x+2*y)*step*0.01) % 256), (uint8_t)((int)((2*x+y)*step*0.01) % 256)));
         }
 
-    sprite->render(renderer);
-    for (auto s : objects) s->render(renderer);
+    for (auto s : objects) render_object(s);
+    render_object(sprite);
 
-    renderer->afterDraw();
+    canvas_controller->afterDraw();
+}
+
+void CApp::render_object(IRenderOwner *object) {
+    IRenderable *renderable = object->render();
+
+    ICanvas *cached = cache->get_from_cache(object->cache_key());
+    if (cached == nullptr) {
+        cached = canvas_controller->create_canvas(renderable->render_width(), renderable->render_height());
+        cache->put_to_cache(object->cache_key(), cached);
+        renderable->render(cached, 0, 0);
+    }
+
+    canvas_controller->main_canvas()->drawCanvas(cached, renderable->render_x(), renderable->render_y());
 }
 
 void CApp::cleanup() {
     delete sprite;
 
-    renderer->cleanup();
-    delete renderer;
-    renderer = nullptr;
+    canvas_controller->cleanup();
+    delete canvas_controller;
+    canvas_controller = nullptr;
 
     delete events_controller;
     events_controller = nullptr;
@@ -134,11 +155,3 @@ void CApp::cleanup() {
     delete time_controller;
     time_controller = nullptr;
 }
-
-//void CApp::setPixel(int x, int y, Uint8 r, Uint8 g, Uint8 b) {
-////    Uint32 *pixmem32;
-////    Uint32 color;
-////    color = SDL_MapRGB(surface->format, r, g, b);
-////    pixmem32 = (Uint32*) surface->pixels + x + y*surface->pitch / 4;
-////    *pixmem32 = color;
-//}

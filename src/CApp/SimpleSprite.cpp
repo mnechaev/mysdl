@@ -3,23 +3,17 @@
 //
 
 #include "SimpleSprite.h"
+#include "SimpleSpriteRender.h"
 
-SimpleSprite::SimpleSprite():dx(1), dy(1) {}
+SimpleSprite::SimpleSprite(): dx(1), dy(1) {}
 
-void SimpleSprite::render(Render *renderer) {
-    RRect rect{};
-    rect.x = x;
-    rect.y = y;
-    rect.w = r * 2;
-    rect.h = r * 2;
+const std::string SimpleSprite::cache_key() {
+    return "SimpleSprite" + std::to_string(r);
+}
 
-    renderer->drawRect(rect, renderer->color(255, 255, 255));
-
-    renderer->drawCircle(rect, renderer->color(0, 0, 255));
-
-    rect.x = x + r;
-    rect.y = y + r;
-    rect.w = (r / 3) * 2;
-    rect.h = rect.w;
-    renderer->drawCircle(rect, renderer->color(0, 255, 0));
+IRenderable *SimpleSprite::render() {
+    if (_render == nullptr) {
+        _render = new SimpleSpriteRender(this);
+    }
+    return _render;
 }

@@ -3,7 +3,7 @@
 //
 
 #include "TimeController.h"
-#include "SDLTimeModel.h"
+#include "../sdl_support/time/SDLTimeModel.h"
 #include "../utils/Logger.h"
 
 TimeController::TimeController() {

@@ -25,7 +25,7 @@ enum EventKeyCodes {
 class Event {
 public:
     EventTypes type;
-    EventKeyCodes key;
+    uint32_t key;
 };
 
 

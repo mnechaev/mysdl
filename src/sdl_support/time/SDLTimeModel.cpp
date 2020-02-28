@@ -4,7 +4,7 @@
 
 #include <SDL_timer.h>
 #include "SDLTimeModel.h"
-#include "../utils/Logger.h"
+#include "../../utils/Logger.h"
 
 SDLTimeModel::SDLTimeModel() {
     Logger::instance().on_instance_create("SDLTimeModel");
