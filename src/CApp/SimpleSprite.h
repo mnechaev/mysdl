@@ -21,11 +21,13 @@ public:
     int dy;
     int color_index = 0;
 
-    const std::string cache_key() override;
+    const std::string & cache_key() override;
+    void invalidate_cache();
 
     IRenderable *render() override;
 
 private:
+    std::string *_cache_key = nullptr;
     IRenderable *_render = nullptr;
 };
 

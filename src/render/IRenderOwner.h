@@ -10,7 +10,7 @@
 
 class IRenderOwner {
 public:
-    virtual const std::string cache_key() = 0;
+    virtual const std::string & cache_key() = 0;
     virtual IRenderable *render() = 0;
 
     virtual ~IRenderOwner() = default;

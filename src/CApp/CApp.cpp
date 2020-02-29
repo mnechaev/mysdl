@@ -94,10 +94,12 @@ void CApp::events(Event *event) {
             case EventKeyCodes::SPACE:
                 sprite->r += 5;
                 if (sprite->r > 40) sprite->r = 30;
+                sprite->invalidate_cache();
                 break;
             case EventKeyCodes::RETURN:
                 sprite->color_index++;
                 if (sprite->color_index >= 3) sprite->color_index = 0;
+                sprite->invalidate_cache();
                 break;
         }
     }
