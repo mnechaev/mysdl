@@ -15,8 +15,10 @@ public:
     Cache(ICanvasController *canvas_controller);
     ~Cache();
 
+    void clean();
+
     ICanvas *get_from_cache(const std::string &cache_key);
-    void put_to_cache(const std::string &cache_key, ICanvas *canvas);
+    ICanvas *create_cached(const std::string &cache_key, uint16_t width, uint16_t height);
 
 private:
     ICanvasController *_canvas_controller;

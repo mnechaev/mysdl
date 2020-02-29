@@ -136,8 +136,7 @@ void CApp::render_object(IRenderOwner *object) {
 
     ICanvas *cached = cache->get_from_cache(object->cache_key());
     if (cached == nullptr) {
-        cached = canvas_controller->create_canvas(renderable->render_width(), renderable->render_height());
-        cache->put_to_cache(object->cache_key(), cached);
+        cached = cache->create_cached(object->cache_key(), renderable->render_width(), renderable->render_height());
         renderable->render(cached, 0, 0);
     }
 
@@ -148,6 +147,9 @@ void CApp::cleanup() {
     delete sprite;
 
     for (auto s : objects) delete s;
+
+    delete cache;
+    cache = nullptr;
 
     canvas_controller->cleanup();
     delete canvas_controller;
