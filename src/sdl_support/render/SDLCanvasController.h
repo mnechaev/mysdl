@@ -20,7 +20,7 @@ public:
     ICanvas *main_canvas() override;
 
     void destroy_canvas(ICanvas *canvas) override;
-    void destroy_canvas(SDLCanvas *canvas);
+    void destroy_sdl_canvas(SDLCanvas *canvas);
 
 
     bool init() override;

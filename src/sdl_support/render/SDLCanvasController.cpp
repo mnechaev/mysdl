@@ -31,15 +31,12 @@ ICanvas *SDLCanvasController::create_canvas(uint16_t width, uint16_t height) {
 
 void SDLCanvasController::destroy_canvas(ICanvas *canvas) {
     SDLCanvas *sdl_canvas = dynamic_cast<SDLCanvas *>(canvas);
-    if (sdl_canvas != nullptr) {
-        destroy_canvas(sdl_canvas);
-        return;
-    }
+    if (sdl_canvas == nullptr) return;
 
-    delete canvas;
+    destroy_sdl_canvas(sdl_canvas);
 }
 
-void SDLCanvasController::destroy_canvas(SDLCanvas *canvas) {
+void SDLCanvasController::destroy_sdl_canvas(SDLCanvas *canvas) {
     SDL_FreeSurface(canvas->image());
     delete canvas;
 }

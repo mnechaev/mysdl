@@ -22,7 +22,7 @@ public:
     void drawCircle(RRect &rect, uint32_t color) override;
 
     void drawCanvas(ICanvas *canvas_item, int16_t x, int16_t y) override;
-    void drawCanvas(SDLCanvas *canvas_item, int16_t x, int16_t y);
+    void drawSDLCanvas(SDLCanvas *sdl_canvas_item, int16_t x, int16_t y);
 
     uint16_t width() const override;
 

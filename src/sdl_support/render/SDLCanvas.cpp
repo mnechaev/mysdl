@@ -38,15 +38,15 @@ void SDLCanvas::drawCircle(RRect &rect, uint32_t color) {
 }
 
 void SDLCanvas::drawCanvas(ICanvas *canvas_item, int16_t x, int16_t y) {
-    SDLCanvas *canvas = dynamic_cast<SDLCanvas *>(canvas_item);
+    SDLCanvas *canvas = dynamic_cast<SDLCanvas *>(canvas_item); // todo: may be static_cast?
     if (canvas == nullptr) return;
 
-    drawCanvas(canvas, x, y);
+    drawSDLCanvas(canvas, x, y);
 }
 
-void SDLCanvas::drawCanvas(SDLCanvas *canvas_item, int16_t x, int16_t y) {
-    SDL_Rect rect{x, y, canvas_item->width(), canvas_item->height()};
-    SDL_BlitSurface(canvas_item->_image, NULL, _image, &rect);
+void SDLCanvas::drawSDLCanvas(SDLCanvas *sdl_canvas_item, int16_t x, int16_t y) {
+    SDL_Rect rect{x, y, sdl_canvas_item->width(), sdl_canvas_item->height()};
+    SDL_BlitSurface(sdl_canvas_item->_image, NULL, _image, &rect);
 }
 
 uint16_t SDLCanvas::width() const {
