@@ -38,10 +38,7 @@ void SDLCanvas::drawCircle(RRect &rect, uint32_t color) {
 }
 
 void SDLCanvas::drawCanvas(ICanvas *canvas_item, int16_t x, int16_t y) {
-    SDLCanvas *canvas = dynamic_cast<SDLCanvas *>(canvas_item); // todo: may be static_cast?
-    if (canvas == nullptr) return;
-
-    drawSDLCanvas(canvas, x, y);
+    drawSDLCanvas((SDLCanvas*) canvas_item, x, y);
 }
 
 void SDLCanvas::drawSDLCanvas(SDLCanvas *sdl_canvas_item, int16_t x, int16_t y) {
