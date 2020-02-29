@@ -5,31 +5,23 @@
 #include <iostream>
 #include "Logger.h"
 
-void Log::on_instance_create(const std::string &name) {
+void Logger::on_instance_create(const std::string &name) {
 //    std::cout << "Create " << name << "..." << std::endl;
-    _inst[name].created += 1;
+    _insts_logs[name].created += 1;
 }
 
-void Log::on_instance_destroy(const std::string &name) {
+void Logger::on_instance_destroy(const std::string &name) {
 //    std::cout << "Destroy " << name << "..." << std::endl;
-    _inst[name].destroyed += 1;
+    _insts_logs[name].destroyed += 1;
 }
 
-void Log::info(const std::string &msg) {
+void Logger::info(const std::string &msg) {
     std::cout << msg << std::endl;
 }
 
-Log::Log() {
-    std::cout << "create logger" << std::endl;
-}
-
-Log::~Log() {
-    std::cout << "destroy logger" << std::endl;
-}
-
-void Log::result() {
+void Logger::result() {
     std::cout << "Classes operations:" << std::endl;
-    for (auto item : _inst) {
+    for (auto item : _insts_logs) {
         ClassOps &op = item.second;
         std::cout << "\t" << (op.valid() ? " " : ">") << " " << item.first
                   << " created: " << op.created
@@ -37,4 +29,4 @@ void Log::result() {
     }
 }
 
-Log *Logger::_inst = nullptr;
+Logger *Logger::_inst = nullptr;

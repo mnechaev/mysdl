@@ -16,10 +16,16 @@ struct ClassOps {
     }
 };
 
-class Log {
+class Logger {
 public:
-    Log();
-    ~Log();
+    static Logger *_inst;
+    static Logger *instance() {
+        if (_inst == nullptr) {
+            _inst = new Logger();
+        }
+        return _inst;
+    }
+
     void on_instance_create(const std::string &name);
     void on_instance_destroy(const std::string &name);
     void info(const std::string &msg);
@@ -27,18 +33,11 @@ public:
     void result();
 
 private:
-    std::unordered_map<std::string, ClassOps> _inst;
-};
+    Logger() {}
+    Logger(Logger const &);
+    Logger& operator=(Logger const &);
 
-class Logger {
-public:
-    static Log *_inst;
-    static Log *instance() {
-        if (_inst == nullptr) {
-            _inst = new Log();
-        }
-        return _inst;
-    }
+    std::unordered_map<std::string, ClassOps> _insts_logs;
 };
 
 
