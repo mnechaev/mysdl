@@ -7,12 +7,12 @@
 
 void Log::on_instance_create(const std::string &name) {
 //    std::cout << "Create " << name << "..." << std::endl;
-    _inst_created[name] += 1;
+    _inst[name].created += 1;
 }
 
 void Log::on_instance_destroy(const std::string &name) {
 //    std::cout << "Destroy " << name << "..." << std::endl;
-    _inst_destroyed[name] += 1;
+    _inst[name].destroyed += 1;
 }
 
 void Log::info(const std::string &msg) {
@@ -28,13 +28,12 @@ Log::~Log() {
 }
 
 void Log::result() {
-    std::cout << "CREATED:" <<std::endl;
-    for (auto ic : _inst_created) {
-        std::cout << "\t" << ic.first << ":\t" << ic.second << std::endl;
-    }
-    std::cout << "DESTROYED:" <<std::endl;
-    for (auto ic : _inst_destroyed) {
-        std::cout << "\t" << ic.first << ":\t" << ic.second << std::endl;
+    std::cout << "Classes operations:" << std::endl;
+    for (auto item : _inst) {
+        ClassOps &op = item.second;
+        std::cout << "\t" << (op.valid() ? " " : ">") << " " << item.first
+                  << " created: " << op.created
+                  << ", destroyed: " << op.destroyed << std::endl;
     }
 }
 

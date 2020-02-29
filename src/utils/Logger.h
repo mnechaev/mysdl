@@ -9,6 +9,13 @@
 #include <string>
 #include <unordered_map>
 
+struct ClassOps {
+    uint16_t created, destroyed;
+    bool valid() {
+        return created == destroyed;
+    }
+};
+
 class Log {
 public:
     Log();
@@ -20,8 +27,7 @@ public:
     void result();
 
 private:
-    std::unordered_map<std::string, int> _inst_created;
-    std::unordered_map<std::string, int> _inst_destroyed;
+    std::unordered_map<std::string, ClassOps> _inst;
 };
 
 class Logger {
