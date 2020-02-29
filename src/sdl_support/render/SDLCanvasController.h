@@ -31,8 +31,6 @@ public:
 
     void afterDraw() override;
 
-    uint32_t color(uint8_t r, uint8_t g, uint8_t b) override;
-
 private:
     uint16_t _width, _height;
     SDLCanvas *main;

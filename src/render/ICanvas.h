@@ -19,6 +19,8 @@ public:
 
     virtual void drawCanvas(ICanvas *canvas_item, int16_t x, int16_t y) = 0;
 
+    virtual uint32_t color(uint8_t red, uint8_t green, uint8_t blue) = 0;
+
     virtual uint16_t width() const = 0;
     virtual uint16_t height() const = 0;
 };

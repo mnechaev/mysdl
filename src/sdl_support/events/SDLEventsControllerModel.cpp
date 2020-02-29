@@ -35,6 +35,25 @@ bool SDLEventsControllerModel::check_event(Event *event) {
     return false;
 }
 
-uint32_t SDLEventsControllerModel::map_key() {
-    return sdl_event.key.keysym.sym;
+EventKeyCodes SDLEventsControllerModel::map_key() {
+    switch (sdl_event.key.keysym.sym) {
+            // arrows
+        case SDLK_UP:
+            return EventKeyCodes::UP;;
+        case SDLK_DOWN:
+            return EventKeyCodes::DOWN;
+        case SDLK_LEFT:
+            return EventKeyCodes::LEFT;
+        case SDLK_RIGHT:
+            return EventKeyCodes::RIGHT;
+            // controls
+        case SDLK_SPACE:
+            return EventKeyCodes::SPACE;
+        case SDLK_RETURN:
+            return EventKeyCodes::RETURN;
+        case SDLK_ESCAPE:
+            return EventKeyCodes::ESCAPE;
+    }
+
+    return EventKeyCodes::UNKNOWN;
 }

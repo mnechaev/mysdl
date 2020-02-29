@@ -91,6 +91,14 @@ void CApp::events(Event *event) {
                 break;
             case EventKeyCodes::RIGHT: sprite->x += S_W / S_XR / 4;
                 break;
+            case EventKeyCodes::SPACE:
+                sprite->r += 5;
+                if (sprite->r > 40) sprite->r = 30;
+                break;
+            case EventKeyCodes::RETURN:
+                sprite->color_index++;
+                if (sprite->color_index >= 3) sprite->color_index = 0;
+                break;
         }
     }
 }
@@ -122,7 +130,7 @@ void CApp::render() {
         for (uint y = 0; y < S_YR; y++) {
             r.x = (int16_t)(x * r.w);
             r.y = (int16_t)(y * r.h);
-            canvas_controller->main_canvas()->drawRect(r, canvas_controller->color((uint8_t)((int)((x+y)*step*0.01) % 256), (uint8_t)((int)((x+2*y)*step*0.01) % 256), (uint8_t)((int)((2*x+y)*step*0.01) % 256)));
+            canvas_controller->main_canvas()->drawRect(r, canvas_controller->main_canvas()->color((uint8_t)((int)((x+y)*step*0.01) % 256), (uint8_t)((int)((x+2*y)*step*0.01) % 256), (uint8_t)((int)((2*x+y)*step*0.01) % 256)));
         }
 
     for (auto s : objects) render_object(s);

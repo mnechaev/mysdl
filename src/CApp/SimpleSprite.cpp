@@ -11,7 +11,7 @@ SimpleSprite::SimpleSprite(): dx(1), dy(1) {
 }
 
 const std::string SimpleSprite::cache_key() {
-    return "SimpleSprite" + std::to_string(r);
+    return "SimpleSprite" + std::to_string(r) + "#" + std::to_string(color_index);
 }
 
 IRenderable *SimpleSprite::render() {

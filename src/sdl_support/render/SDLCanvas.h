@@ -24,6 +24,8 @@ public:
     void drawCanvas(ICanvas *canvas_item, int16_t x, int16_t y) override;
     void drawSDLCanvas(SDLCanvas *sdl_canvas_item, int16_t x, int16_t y);
 
+    uint32_t color(uint8_t red, uint8_t green, uint8_t blue) override;
+
     uint16_t width() const override;
 
     uint16_t height() const override;

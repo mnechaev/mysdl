@@ -29,6 +29,8 @@ int SimpleSpriteRender::render_height() const {
     return _sprite->r * 2;
 }
 
+#define SELECT(val, A, B, C) (val) == 0 ? (A) : ((val) == 1 ? (B) : (C))
+
 void SimpleSpriteRender::render(ICanvas *canvas, int16_t x, int16_t y) {
     RRect rect{};
     rect.x = x;
@@ -36,14 +38,18 @@ void SimpleSpriteRender::render(ICanvas *canvas, int16_t x, int16_t y) {
     rect.w = _sprite->r * 2;
     rect.h = _sprite->r * 2;
 
-    canvas->drawRect(rect, 255);
+    uint32_t color1 = canvas->color(255, 255, 255);
+    uint32_t color2 = canvas->color(0, 0, 255);
+    uint32_t color3 = canvas->color(255, 255, 0);
 
-    canvas->drawCircle(rect, 255<<8);
+    canvas->drawRect(rect, SELECT(_sprite->color_index, color1, color2, color3));
+
+    canvas->drawCircle(rect, SELECT(_sprite->color_index, color2, color3, color1));
 
     rect.x = x + _sprite->r;
     rect.y = y + _sprite->r;
     rect.w = (_sprite->r / 3) * 2;
     rect.h = rect.w;
-    canvas->drawCircle(rect, 255 << 16);
+    canvas->drawCircle(rect, SELECT(_sprite->color_index, color3, color1, color2));
 
 }

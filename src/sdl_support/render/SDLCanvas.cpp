@@ -57,3 +57,7 @@ uint16_t SDLCanvas::height() const {
 SDL_Surface *SDLCanvas::image() {
     return _image;
 }
+
+uint32_t SDLCanvas::color(uint8_t red, uint8_t green, uint8_t blue) {
+    return SDL_MapRGB(image()->format, red, green, blue);
+}

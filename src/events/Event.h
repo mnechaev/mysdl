@@ -16,16 +16,19 @@ enum EventTypes {
 
 enum EventKeyCodes {
     UNKNOWN = 0,
-    UP = 273,
-    DOWN = 274,
-    RIGHT = 275,
-    LEFT = 276
+    UP = 1,
+    DOWN,
+    RIGHT,
+    LEFT,
+    SPACE,
+    RETURN, // enter
+    ESCAPE
 };
 
 class Event {
 public:
     EventTypes type;
-    uint32_t key;
+    EventKeyCodes key;
 };
 
 

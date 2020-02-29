@@ -19,6 +19,7 @@ public:
     int r;
     int dx;
     int dy;
+    int color_index = 0;
 
     const std::string cache_key() override;
 

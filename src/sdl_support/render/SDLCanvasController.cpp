@@ -70,10 +70,6 @@ void SDLCanvasController::afterDraw() {
     SDL_Flip(surface);
 }
 
-uint32_t SDLCanvasController::color(uint8_t r, uint8_t g, uint8_t b) {
-    return SDL_MapRGB(main->image()->format, r, g, b);
-}
-
 ICanvas *SDLCanvasController::main_canvas() {
     return main;
 }

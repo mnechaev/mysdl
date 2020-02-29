@@ -20,8 +20,6 @@ public:
 
     virtual bool beforeDraw() = 0;
     virtual void afterDraw() = 0;
-
-    virtual uint32_t color(uint8_t r, uint8_t g, uint8_t b) = 0;
 };
 
 #endif //MYSDL_ICANVASCONTROLLER_H

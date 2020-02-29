@@ -17,7 +17,7 @@ public:
 private:
     SDL_Event sdl_event;
 
-    uint32_t map_key();
+    EventKeyCodes map_key();
 };
 
 
