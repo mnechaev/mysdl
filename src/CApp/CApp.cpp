@@ -112,8 +112,10 @@ void CApp::events(Event *event) {
     }
 }
 
+#define APP_STEP_SPEED 2500
+
 void CApp::loop(uint32_t dt) {
-    step++;
+    step += (int) APP_STEP_SPEED * dt / 1000;
 
     for(auto sprite : objects) {
         loop_sprite(sprite, dt);

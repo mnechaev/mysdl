@@ -15,6 +15,8 @@ public:
     explicit SDLCanvas(SDL_Surface *image, uint16_t width, uint16_t height);
     ~SDLCanvas();
 
+    void clear(uint32_t color) override;
+
     void drawRect(RRect &rect, uint32_t color) override;
 
     void setPixel(int16_t x, int16_t y, uint32_t color) override;

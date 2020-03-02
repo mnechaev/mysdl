@@ -60,9 +60,13 @@ SDL_Surface * SDLCanvas::image() const {
 }
 
 uint32_t SDLCanvas::color(uint8_t red, uint8_t green, uint8_t blue) {
-    return SDL_MapRGB(image()->format, red, green, blue);
+    return SDL_MapRGB(_image->format, red, green, blue);
 }
 
 uint32_t SDLCanvas::bytes_size() const {
-    return width() * height() * ceil(image()->format->BitsPerPixel / 8) + sizeof(SDLCanvas);
+    return width() * height() * ceil(_image->format->BitsPerPixel / 8) + sizeof(SDLCanvas);
+}
+
+void SDLCanvas::clear(uint32_t color) {
+    SDL_FillRect(_image, NULL, color);
 }

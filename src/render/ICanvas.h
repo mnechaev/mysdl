@@ -11,6 +11,7 @@ class ICanvas {
 public:
     virtual ~ICanvas() = default;
 
+    virtual void clear(uint32_t color) = 0;
     virtual void drawRect(RRect &rect, uint32_t color) = 0;
 
     virtual void setPixel(int16_t x, int16_t y, uint32_t color) = 0;
