@@ -1,3 +1,4 @@
+#include <cmath>
 #include "CApp.h"
 #include "../utils/Benchmark.h"
 #include "../utils/Logger.h"
@@ -29,15 +30,15 @@ int CApp::onExecute() {
     }
 
     sprite = new SimpleSprite();
-    sprite->x = 100;
-    sprite->y = 100;
+    sprite->x = 100 * SS_COORD_SCALE;
+    sprite->y = 100 * SS_COORD_SCALE;
     sprite->r = 30;
     Event *event = new Event();
 
     for (uint i = 0; i < 10000; i++) {
         SimpleSprite *obj = new SimpleSprite();
-        obj->x = random() % S_W;
-        obj->y = random() % S_H;
+        obj->x = random() % S_W * SS_COORD_SCALE;
+        obj->y = random() % S_H * SS_COORD_SCALE;
         obj->r = random()%30 + 10;
         obj->dx = random()%2 == 0 ? -1 : 1;
         obj->dy = random()%2 == 0 ? -1 : 1;
@@ -49,15 +50,21 @@ int CApp::onExecute() {
 
     Benchmark benchmark;
     benchmark.init_on_frame(time_controller->get_ticks());
+    uint32_t t = time_controller->get_ticks();
     while (running) {
         while (events_controller->check_event(event)) {
             events(event);
         }
 
-        loop();
+        uint32_t ct = time_controller->get_ticks();
+        uint32_t dt = ct - t;
+        if (dt < min_ft()) continue;
+
+        loop(dt);
         render();
 
         benchmark.on_frame(time_controller->get_ticks());
+        t = ct;
     }
 
     delete event;
@@ -83,13 +90,13 @@ void CApp::events(Event *event) {
     if (event->type == EventTypes::QUIT) running = false;
     if (event->type == EventTypes::KEYDOWN) {
         switch (event->key) {
-            case EventKeyCodes::UP: sprite->y -= S_H / S_YR / 4;
+            case EventKeyCodes::UP: sprite->y -= 1 * SS_COORD_SCALE;
                 break;
-            case EventKeyCodes::DOWN: sprite->y += S_H / S_YR / 4;
+            case EventKeyCodes::DOWN: sprite->y += 1 * SS_COORD_SCALE;
                 break;
-            case EventKeyCodes::LEFT: sprite->x -= S_W / S_XR / 4;
+            case EventKeyCodes::LEFT: sprite->x -= 1 * SS_COORD_SCALE;
                 break;
-            case EventKeyCodes::RIGHT: sprite->x += S_W / S_XR / 4;
+            case EventKeyCodes::RIGHT: sprite->x += 1 * SS_COORD_SCALE;
                 break;
             case EventKeyCodes::SPACE:
                 sprite->r += 5;
@@ -105,19 +112,19 @@ void CApp::events(Event *event) {
     }
 }
 
-void CApp::loop() {
+void CApp::loop(uint32_t dt) {
     step++;
 
     for(auto sprite : objects) {
-        loop_sprite(sprite);
+        loop_sprite(sprite, dt);
     }
 }
 
-void CApp::loop_sprite(SimpleSprite *sprite) {
-    sprite->x +=sprite->dx;
-    sprite->y += sprite->dy;
-    if (sprite->x >= canvas_controller->main_canvas()->width() - sprite->r * 2) sprite->dx = -1;
-    if (sprite->y >= canvas_controller->main_canvas()->height() - sprite->r * 2) sprite->dy = -1;
+void CApp::loop_sprite(SimpleSprite *sprite, uint32_t dt) {
+    sprite->x += (float) sprite->dx * SS_REAL_SPEED * SS_COORD_SCALE * dt / 1000;
+    sprite->y += (float) sprite->dy * SS_REAL_SPEED * SS_COORD_SCALE * dt / 1000;
+    if (sprite->x / SS_COORD_SCALE >= canvas_controller->main_canvas()->width() - sprite->r * 2) sprite->dx = -1;
+    if (sprite->y / SS_COORD_SCALE >= canvas_controller->main_canvas()->height() - sprite->r * 2) sprite->dy = -1;
     if (sprite->x <= 0) sprite->dx = 1;
     if (sprite->y <= 0) sprite->dy = 1;
 }
@@ -170,4 +177,8 @@ void CApp::cleanup() {
 
     delete time_controller;
     time_controller = nullptr;
+}
+
+uint16_t CApp::min_ft() {
+    return ceil(1000.0 / max_fps);
 }

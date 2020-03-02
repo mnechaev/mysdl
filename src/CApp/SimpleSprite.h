@@ -9,6 +9,9 @@
 #include "../render/IRenderable.h"
 #include "../render/IRenderOwner.h"
 
+#define SS_COORD_SCALE 1000
+#define SS_REAL_SPEED 200
+
 class SimpleSprite : public IRenderOwner {
 public:
     SimpleSprite();

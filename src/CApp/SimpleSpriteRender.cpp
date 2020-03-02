@@ -14,11 +14,11 @@ SimpleSpriteRender::~SimpleSpriteRender() {
 }
 
 int SimpleSpriteRender::render_x() const {
-    return _sprite->x;
+    return _sprite->x / SS_COORD_SCALE;
 }
 
 int SimpleSpriteRender::render_y() const {
-    return _sprite->y;
+    return _sprite->y / SS_COORD_SCALE;
 }
 
 int SimpleSpriteRender::render_width() const {
@@ -46,10 +46,21 @@ void SimpleSpriteRender::render(ICanvas *canvas, int16_t x, int16_t y) {
 
     canvas->drawCircle(rect, SELECT(_sprite->color_index, color2, color3, color1));
 
-    rect.x = x + _sprite->r;
-    rect.y = y + _sprite->r;
     rect.w = (_sprite->r / 3) * 2;
     rect.h = rect.w;
+
+    rect.x = x + _sprite->r + rect.w / 6;
+    rect.y = y + _sprite->r - rect.h;
     canvas->drawCircle(rect, SELECT(_sprite->color_index, color3, color1, color2));
 
+    rect.x = x + _sprite->r - rect.w - rect.w / 6;
+    canvas->drawCircle(rect, SELECT(_sprite->color_index, color3, color1, color2));
+
+
+    rect.w = (_sprite->r / 4) * 2;
+    rect.h = rect.w;
+
+    rect.x = x + _sprite->r - rect.w / 2;
+    rect.y = _sprite->r + _sprite->r / 2 - rect.h / 2;
+    canvas->drawCircle(rect, SELECT(_sprite->color_index, color3, color1, color2));
 }

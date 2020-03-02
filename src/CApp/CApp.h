@@ -31,11 +31,13 @@ private:
     bool init();
 
     void events(Event *event);
-    void loop();
+    void loop(uint32_t dt);
     void render();
     void render_object(IRenderOwner *object);
 
-    void loop_sprite(SimpleSprite* sprite);
+    void loop_sprite(SimpleSprite *sprite, uint32_t dt);
+    uint16_t max_fps = 70;
+    uint16_t min_ft();
 
     void cleanup();
 };
