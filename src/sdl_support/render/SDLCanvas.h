@@ -30,7 +30,9 @@ public:
 
     uint16_t height() const override;
 
-    SDL_Surface *image();
+    SDL_Surface * image() const;
+
+    uint32_t bytes_size() const override;
 
 private:
     SDL_Surface *_image;

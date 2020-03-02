@@ -23,6 +23,8 @@ public:
 
     virtual uint16_t width() const = 0;
     virtual uint16_t height() const = 0;
+
+    virtual uint32_t bytes_size() const = 0;
 };
 
 #endif //MYSDL_ICANVAS_H

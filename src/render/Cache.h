@@ -23,6 +23,7 @@ public:
 private:
     ICanvasController *_canvas_controller;
     std::unordered_map<std::string, ICanvas*> map;
+    uint32_t _cache_bytes_size = 0;
 };
 
 

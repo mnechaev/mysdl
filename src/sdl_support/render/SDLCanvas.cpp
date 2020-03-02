@@ -2,6 +2,7 @@
 // Created by mnechaev on 28.02.2020.
 //
 
+#include <cmath>
 #include "SDLCanvas.h"
 #include "../../utils/Logger.h"
 
@@ -54,10 +55,14 @@ uint16_t SDLCanvas::height() const {
     return _height;
 }
 
-SDL_Surface *SDLCanvas::image() {
+SDL_Surface * SDLCanvas::image() const {
     return _image;
 }
 
 uint32_t SDLCanvas::color(uint8_t red, uint8_t green, uint8_t blue) {
     return SDL_MapRGB(image()->format, red, green, blue);
+}
+
+uint32_t SDLCanvas::bytes_size() const {
+    return width() * height() * ceil(image()->format->BitsPerPixel / 8) + sizeof(SDLCanvas);
 }
