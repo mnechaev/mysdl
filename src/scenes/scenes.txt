@@ -1,0 +1,29 @@
+Как должны работать сцены?
+
+Сцена - это примерно окно.
+Сцену можно открыть. Можно закрыть.
+Сцена обрабатывает тики и события.
+Сцену можно добавить в другую сцену.
+Должна быть главная сцена.
+Сцена должна уметь отрисовывать себя и свои сцены.
+
+
+ISceneObject - любой объект в сцене
+    on_added_to_scene
+    on_removed_from_scene
+
+ITickableObject - объект обрабатываемый во времени
+    process_tick(uint32_t)
+
+Scene : ISceneObject, ITickableObject, IRenderOwner
+    add_object(ISceneObject*)
+    remove_object(ISceneObject*)
+
+    process_tick(uint32_t)
+    process_event(Event*)
+
+    render(ICanvas*, offset)
+
+
+add_object/remove_object
+    Проверяет объект и добавляет его в соответствующие кэши (для тиков, для рендера и тд)
