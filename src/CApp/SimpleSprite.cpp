@@ -41,3 +41,7 @@ void SimpleSprite::invalidate_cache() {
     delete _cache_key;
     _cache_key = nullptr;
 }
+
+SimpleSprite::pointer SimpleSprite::create() {
+    return SimpleSprite::pointer(new SimpleSprite());
+}

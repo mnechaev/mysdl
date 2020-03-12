@@ -22,8 +22,8 @@ private:
     EventsController *events_controller;
     TimeController *time_controller;
 
-    SimpleSprite *sprite;
-    std::vector<SimpleSprite*> objects;
+    SimpleSprite::pointer sprite;
+    std::vector<SimpleSprite::pointer> objects;
 
     bool running;
     unsigned step;

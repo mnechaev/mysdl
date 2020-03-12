@@ -1,8 +1,15 @@
 #include <SDL.h>
 #include "CApp/CApp.h"
+#include "utils/Logger.h"
 
 int main(int argc, char *argv[]) {
-    CApp app;
+    CApp *app = new CApp;
 
-    return app.onExecute();
+    int result = app->onExecute();
+
+    delete app;
+
+    Logger::instance()->result();
+
+    return result;
 }

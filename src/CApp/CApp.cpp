@@ -19,8 +19,6 @@ CApp::CApp() {
 
 CApp::~CApp() {
     Logger::instance()->on_instance_destroy("App");
-
-    Logger::instance()->result();
 }
 
 int CApp::onExecute() {
@@ -29,14 +27,14 @@ int CApp::onExecute() {
         return -1;
     }
 
-    sprite = new SimpleSprite();
+    sprite = SimpleSprite::create();
     sprite->x = 100 * SS_COORD_SCALE;
     sprite->y = 100 * SS_COORD_SCALE;
     sprite->r = 30;
     Event *event = new Event();
 
     for (uint i = 0; i < 10000; i++) {
-        SimpleSprite *obj = new SimpleSprite();
+        SimpleSprite::pointer obj = SimpleSprite::create();
         obj->x = random() % S_W * SS_COORD_SCALE;
         obj->y = random() % S_H * SS_COORD_SCALE;
         obj->r = random()%30 + 10;
@@ -118,7 +116,7 @@ void CApp::loop(uint32_t dt) {
     step += (int) APP_STEP_SPEED * dt / 1000;
 
     for(auto sprite : objects) {
-        loop_sprite(sprite, dt);
+        loop_sprite(sprite.get(), dt);
     }
 }
 
@@ -144,8 +142,8 @@ void CApp::render() {
             canvas_controller->main_canvas()->drawRect(r, canvas_controller->main_canvas()->color((uint8_t)((int)((x+y)*step*0.01) % 256), (uint8_t)((int)((x+2*y)*step*0.01) % 256), (uint8_t)((int)((2*x+y)*step*0.01) % 256)));
         }
 
-    for (auto s : objects) render_object(s);
-    render_object(sprite);
+    for (auto s : objects) render_object(s.get());
+    render_object(sprite.get());
 
     canvas_controller->afterDraw();
 }
@@ -163,10 +161,6 @@ void CApp::render_object(IRenderOwner *object) {
 }
 
 void CApp::cleanup() {
-    delete sprite;
-
-    for (auto s : objects) delete s;
-
     delete cache;
     cache = nullptr;
 

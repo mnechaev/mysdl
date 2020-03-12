@@ -6,6 +6,7 @@
 #define MYSDL_SIMPLESPRITE_H
 
 
+#include <memory>
 #include "../render/IRenderable.h"
 #include "../render/IRenderOwner.h"
 
@@ -14,6 +15,8 @@
 
 class SimpleSprite : public IRenderOwner {
 public:
+    typedef std::shared_ptr<SimpleSprite> pointer;
+    static pointer create();
     SimpleSprite();
     ~SimpleSprite();
 
